@@ -40,8 +40,3 @@ npm start
 5) Open in browser
 - Login: `http://localhost:3000/view/login.html`
 - Signup: `http://localhost:3000/view/signup.html`
-
-## Notes
-- Repository naming for the original lab test: `studentID_lab_test1_chat_app` (replace studentID with yours).
-- This version uses JWT for a cleaner “session in localStorage” approach.
-
