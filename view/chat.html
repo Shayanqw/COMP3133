@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chat – Chat App</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/view/assets/app.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/view/assets/auth.js"></script>
+
+  <script src="/view/assets/chat.js" defer></script>
+</head>
+<body>
+  <div class="container py-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+      <div>
+        <h2 class="mb-0">Chat App</h2>
+        <div class="small-muted">Room: <span class="badge badge-soft" id="roomName"></span> • <span id="who"></span></div>
+      </div>
+
+      <div class="d-flex gap-2">
+        <button id="leaveBtn" class="btn btn-outline-light">Leave room</button>
+        <button id="logoutBtn" class="btn btn-outline-light">Logout</button>
+      </div>
+    </div>
+
+    <div id="status" class="alert alert-warning d-none"></div>
+
+    <div class="chat-shell">
+      <!-- Left: users / DM -->
+      <div class="card-glass p-3">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div class="fw-semibold">Online users</div>
+          <span class="badge badge-soft">DM enabled</span>
+        </div>
+        <div class="small-muted mb-2">Click a user to open private chat.</div>
+        <div id="usersList" class="d-grid gap-2"></div>
+      </div>
+
+      <!-- Right: room chat -->
+      <div class="card-glass p-3">
+        <div id="typingLine" class="typing-line mb-1"></div>
+
+        <div id="roomMessages" class="messages"></div>
+
+        <div class="mt-2">
+          <div class="input-group">
+            <textarea id="roomInput" class="form-control" rows="1" placeholder="Type your message… (Enter to send, Shift+Enter for newline)"></textarea>
+            <button id="sendBtn" class="btn btn-primary">Send</button>
+          </div>
+        </div>
+
+        <div class="small-muted mt-2">
+          Messages are stored in MongoDB (group + private).
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DM Modal -->
+  <div class="modal fade" id="dmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content bg-dark border border-secondary">
+        <div class="modal-header border-secondary">
+          <div>
+            <h5 class="modal-title">Direct message with <span id="dmWith"></span></h5>
+            <div id="dmTyping" class="small-muted"></div>
+          </div>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="dmMessages" class="messages" style="height: 360px;"></div>
+          <div class="mt-2">
+            <div class="input-group">
+              <textarea id="dmInput" class="form-control" rows="1" placeholder="Type a private message…"></textarea>
+              <button id="dmSendBtn" class="btn btn-primary">Send</button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-secondary">
+          <div class="small-muted me-auto">Typing indicator works for 1-to-1 chat too.</div>
+          <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toasts -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastWrap"></div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Signup – Chat App</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/view/assets/app.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/view/assets/auth.js"></script>
+
+  <script src="/view/assets/signup.js" defer></script>
+</head>
+<body>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="card-glass p-4 p-md-5">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+              <h2 class="mb-1">Create account</h2>
+              <div class="small-muted">Pick a unique username.</div>
+            </div>
+            <a href="/view/login.html" class="btn btn-outline-light btn-sm">Login</a>
+          </div>
+
+          <div id="error" class="alert alert-danger d-none"></div>
+
+          <form id="signupForm" class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">First name</label>
+              <input id="firstname" class="form-control" placeholder="e.g. Shayan" required />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Last name</label>
+              <input id="lastname" class="form-control" placeholder="e.g. Pourahmad" required />
+            </div>
+            <div class="col-12">
+              <label class="form-label">Username</label>
+              <input id="username" class="form-control" placeholder="letters, numbers, underscore" required />
+              <div class="form-text text-light-emphasis">Must be 3–32 characters, unique.</div>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Password</label>
+              <input id="password" type="password" class="form-control" placeholder="min 6 chars" required />
+            </div>
+            <div class="col-12 d-grid">
+              <button class="btn btn-primary btn-lg">Sign up</button>
+            </div>
+          </form>
+
+          <div class="mt-3 small-muted">
+            For portfolio: secure-ish session using JWT stored in localStorage.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
