@@ -1,0 +1,138 @@
+{
+  "info": {
+    "name": "COMP3133 Assignment 1 - Employee Management GraphQL",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1) Signup (Mutation)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"mutation Signup($username: String!, $email: String!, $password: String!) {\\n  signup(username: $username, email: $email, password: $password) {\\n    success\\n    message\\n    token\\n    user { _id username email created_at updated_at }\\n  }\\n}\",\n  \"variables\": {\n    \"username\": \"demo_user\",\n    \"email\": \"demo_user@example.com\",\n    \"password\": \"Password123!\"\n  }\n}\n"
+        }
+      }
+    },
+    {
+      "name": "2) Login (Query)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"query Login($usernameOrEmail: String!, $password: String!) {\\n  login(usernameOrEmail: $usernameOrEmail, password: $password) {\\n    success\\n    message\\n    token\\n    user { _id username email }\\n  }\\n}\",\n  \"variables\": {\n    \"usernameOrEmail\": \"demo_user\",\n    \"password\": \"Password123!\"\n  }\n}\n"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const res = pm.response.json();",
+              "const token = res?.data?.login?.token;",
+              "if (token) { pm.environment.set('token', token); }"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "3) Get All Employees (Query)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"query {\\n  getAllEmployees {\\n    success\\n    message\\n    count\\n    employees { _id first_name last_name email gender designation salary date_of_joining department employee_photo }\\n  }\\n}\"\n}\n"
+        }
+      }
+    },
+    {
+      "name": "4) Add Employee (Mutation)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"mutation AddEmployee($employee: EmployeeInput!) {\\n  addEmployee(employee: $employee) {\\n    success\\n    message\\n    employee { _id first_name last_name email gender designation salary date_of_joining department employee_photo }\\n  }\\n}\",\n  \"variables\": {\n    \"employee\": {\n      \"first_name\": \"Mina\",\n      \"last_name\": \"Rahimi\",\n      \"email\": \"mina.rahimi@example.com\",\n      \"gender\": \"Female\",\n      \"designation\": \"Business Analyst\",\n      \"salary\": 54000,\n      \"date_of_joining\": \"2026-01-10\",\n      \"department\": \"Operations\",\n      \"employee_photo\": \"\"\n    }\n  }\n}\n"
+        }
+      }
+    },
+    {
+      "name": "5) Search Employee by EID (Query)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"query SearchByEid($eid: ID!) {\\n  searchEmployeeByEid(eid: $eid) {\\n    success\\n    message\\n    employee { _id first_name last_name email designation department }\\n  }\\n}\",\n  \"variables\": {\n    \"eid\": \"{{eid}}\"\n  }\n}\n"
+        }
+      }
+    },
+    {
+      "name": "6) Update Employee by EID (Mutation)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"mutation UpdateEmp($eid: ID!, $updates: EmployeeUpdateInput!) {\\n  updateEmployeeByEid(eid: $eid, updates: $updates) {\\n    success\\n    message\\n    employee { _id first_name last_name salary designation department }\\n  }\\n}\",\n  \"variables\": {\n    \"eid\": \"{{eid}}\",\n    \"updates\": {\n      \"salary\": 60000,\n      \"designation\": \"Senior Business Analyst\"\n    }\n  }\n}\n"
+        }
+      }
+    },
+    {
+      "name": "7) Delete Employee by EID (Mutation)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"mutation DeleteEmp($eid: ID!) {\\n  deleteEmployeeByEid(eid: $eid) {\\n    success\\n    message\\n    deletedEmployeeId\\n  }\\n}\",\n  \"variables\": {\n    \"eid\": \"{{eid}}\"\n  }\n}\n"
+        }
+      }
+    },
+    {
+      "name": "8) Search Employees by Designation or Department (Query)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": { "raw": "{{baseUrl}}", "host": ["{{baseUrl}}"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"query SearchByDesignationOrDept($designation: String, $department: String) {\\n  searchEmployeesByDesignationOrDepartment(designation: $designation, department: $department) {\\n    success\\n    message\\n    count\\n    employees { _id first_name last_name designation department }\\n  }\\n}\",\n  \"variables\": {\n    \"designation\": \"Engineer\",\n    \"department\": null\n  }\n}\n"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: comp3133_mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: comp3133_api
+    ports:
+      - "8081:8081"
+    environment:
+      - PORT=8081
+      - NODE_ENV=production
+      - AUTH_REQUIRED=true
+      - JWT_SECRET=change_me
+      - JWT_EXPIRES_IN=2h
+      - MONGO_URI=mongodb://mongo:27017/comp3133_101474651_Assigment1
+      # Cloudinary env vars can be added here if you want photo upload in Docker
+      # - CLOUDINARY_CLOUD_NAME=
+      # - CLOUDINARY_API_KEY=
+      # - CLOUDINARY_API_SECRET=
+      # - CLOUDINARY_FOLDER=comp3133_employee_photos
+    depends_on:
+      - mongo
+
+volumes:
+  mongo_data:
