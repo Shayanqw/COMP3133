@@ -1,0 +1,44 @@
+{
+  "name": "w6_3133_nodejs_express_apollo_graphql",
+  "version": "1.0.0",
+  "description": "Advanve mongodb, mongoos and express",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pritamworld/w7_3133_nodejs_express_apollo_graphql.git"
+  },
+  "keywords": [
+    "mongoose",
+    "Apollo",
+    "graphql",
+    "mongodb",
+    "express",
+    "API"
+  ],
+  "author": "Pritesh Patel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pritamworld/w7_3133_nodejs_express_apollo_graphql_template/issues"
+  },
+  "homepage": "https://github.com/pritamworld/w7_3133_nodejs_express_apollo_graphql_template#readme",
+  "dependencies": {
+    "@apollo/server": "^5.4.0",
+    "@as-integrations/express5": "^1.1.2",
+    "apollo-server-core": "^3.13.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.4",
+    "express": "^5.2.1",
+    "graphql": "^16.12.0",
+    "graphql-tag": "^2.12.6",
+    "mongodb": "^7.1.0",
+    "mongoose": "^9.1.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
